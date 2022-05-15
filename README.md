@@ -5,6 +5,6 @@ The players have to move the ball with W(forward) A (left) S (backwards) D (righ
 
 If the ball collides with one player, the other player won.
 
-![]"screenshot.png"
+![](screenshot.png)
 
-![]"other_screenshot.png"
+![](other_screenshot.png)
