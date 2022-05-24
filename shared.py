@@ -140,18 +140,37 @@ class Box(Button, Replicator):
             rotation_y=90,
             rotation_x=-90
         )
-    need_destroy=False
-    replicates=[]
 
-    def update(self):
-        need_destroy=False
-        replicates=[]
+        Replicator.__init__(self)
+    #need_destroy=False
+    #replicates=[]
+    def destroy_server(self):
+        replicated_destroy(self)
+        self.rpc_multicast(self.sfx_multicast, 0.5)
+
+    def place_server(self, pos):
+        a = self.replicated_handler.create_replicated_object(Box, position = pos)
+        self.rpc_multicast(self.sfx_multicast, 1)
+    #def update(self):
+    #    need_destroy=False
+    #    replicates=[]
     def input(self, key):
-        if key=="w hold":
-            self.x-=0.1
-        if key=="s hold":
-            self.x+=0.1
-        if key=="a hold":
-            self.z-=0.1
-        if key=="d hold":
-            self.z+=0.1
+        if key=="w hold": #hold":
+            #self.x-=0.1
+            self.rpc_server(self.destroy_server)
+            self.rpc_server(self.place_server, (self.x - 0.1,0,self.z))#self.x-0.1)
+            #self.rpc_server(self.destroy_server)
+        if key=="s hold": #hold":
+            #self.x+=0.1
+            self.rpc_server(self.destroy_server)
+            self.rpc_server(self.place_server, (self.x + 0.1,0,self.z))
+            #self.rpc_server(self.destroy_server)
+        if key=="a hold": #hold
+            #self.z-=0.1
+            self.rpc_server(self.destroy_server)
+            self.rpc_server(self.place_server, (self.x,0,self.z - 0.1))
+            #self.rpc_server(self.destroy_server)
+        if key=="d hold": #hold
+            #self.z+=0.1
+            self.rpc_server(self.destroy_server)
+            self.rpc_server(self.place_server, (self.x,0,self.z + 0.1))
